@@ -1,4 +1,4 @@
-    This repository contains:
+    # Python repository contains: #
     
     ## CEASAR's Code ##
       *fable.txt
@@ -45,6 +45,10 @@
       * search.py
       * test.py
       * webcorpus.py
+
+    ## Simulating robots ##
+      * robotSimulation.py
+      * visualize.py
 
     ## Strings ##
       * alphabetical_substrings.py
