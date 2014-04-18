@@ -1,7 +1,8 @@
 def isMyNumber(guess):
-    if -49467865 > guess:
+    secretNum = -49467865
+    if secretNum > guess:
         return -1
-    elif -49467865 < guess:
+    elif secretNum < guess:
         return 1
     else:
         return 0
