@@ -26,7 +26,10 @@
       * Pong.py
       * Rock-Paper-Scissors-Lizard-Spock.py
       * StopWatch.py
-  
+
+    ## Graph optimization ##
+      * graph.py 
+ 
     ## PAYING OFF CREDIT CARD DEBT ##
       * bisection_search.py
       * paying_debt_off_in_a_year.py
