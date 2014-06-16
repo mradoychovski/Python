@@ -18,19 +18,18 @@ DOWN = 2
 LEFT = 3
 RIGHT = 4
 
-class GUI:
+class GUI(object):
     """
     Class to run game GUI.
     """
-    
     def __init__(self, game):
         self._game = game
         self._cols = game.get_grid_height()
         self._rows = game.get_grid_width()
-        self._frame = simplegui.create_frame('2048', 
-                        self._rows * TILE_SIZE + 2 * BORDER_SIZE, 
+        self._frame = simplegui.create_frame('2048',
+                        self._rows * TILE_SIZE + 2 * BORDER_SIZE,
                         self._cols * TILE_SIZE + 2 * BORDER_SIZE)
-        self._directions = {"up": UP, "down": DOWN, 
+        self._directions = {"up": UP, "down": DOWN,
                             "left": LEFT, "right": RIGHT}
         self._frame.add_button('New Game', self.start)
         self._frame.set_keydown_handler(self.keydown)
@@ -39,7 +38,7 @@ class GUI:
         url = codeskulptor.file2url(IMAGENAME)
         self._tiles = simplegui.load_image(url)
         self._frame.start()
-        
+
     def keydown(self, key):
         """
         Keydown handler
@@ -48,29 +47,29 @@ class GUI:
             if key == simplegui.KEY_MAP[dirstr]:
                 self._game.move(dirval)
                 break
-        
+
     def draw(self, canvas):
         """
         Draw handler
         """
         for row in range(self._rows):
-            for col in range(self._cols):               
+            for col in range(self._cols):
                 tile = self._game.get_tile(col, row)
                 if tile == 0:
                     val = 0
                 else:
                     val = int(math.log(tile, 2))
-                canvas.draw_image(self._tiles, 
-                    [HALF_TILE_SIZE + val * TILE_SIZE, HALF_TILE_SIZE], 
-                    [TILE_SIZE, TILE_SIZE], 
-                    [row * TILE_SIZE + HALF_TILE_SIZE + BORDER_SIZE, 
-                     col * TILE_SIZE + HALF_TILE_SIZE + BORDER_SIZE], 
+                canvas.draw_image(self._tiles,
+                    [HALF_TILE_SIZE + val * TILE_SIZE, HALF_TILE_SIZE],
+                    [TILE_SIZE, TILE_SIZE],
+                    [row * TILE_SIZE + HALF_TILE_SIZE + BORDER_SIZE,
+                     col * TILE_SIZE + HALF_TILE_SIZE + BORDER_SIZE],
                     [TILE_SIZE, TILE_SIZE])
-                    
+
     def start(self):
         """
         Start the game.
-        """        
+        """
         self._game.reset()
         self._game.new_tile()
         self._game.new_tile()
