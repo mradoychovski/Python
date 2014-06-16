@@ -1,19 +1,32 @@
-    # Python repository contains: #
-    
-    ## CEASAR's Code ##
-      *fable.txt
+    # Python repository contains:
+
+    ## Algorithms
+      ### MergeSort
+        * IntegerArray.txt
+        * mergeSort.py
+
+      ### QuickSort
+        * quickSort.py
+        * QuickSort.txt
+
+    ## CEASAR's Code
+      * fable.txt
       * ps6_encription.py
       * ps6_psuedo.txt
       * ps6_recursion.py
       * story.txt
       * words.txt
       
-    ## Games ##
-      ### Hangman ###
+    ## Games
+      ### 2048
+        * poc_2048_gui.py
+        * TwFN.py
+
+      ### Hangman
         * ps3_hangman.py
         * words.txt
       
-      ### SCRABBLE ###
+      ### SCRABBLE
         * ps4a.py
         * ps4b.py
         * test_ps4a.py
@@ -27,33 +40,33 @@
       * Rock-Paper-Scissors-Lizard-Spock.py
       * StopWatch.py
 
-    ## Graph optimization ##
+    ## Graph optimization
       * graph.py 
  
-    ## PAYING OFF CREDIT CARD DEBT ##
+    ## PAYING OFF CREDIT CARD DEBT
       * bisection_search.py
       * paying_debt_off_in_a_year.py
       * paying_the_minimum.py
 
-    ## RSS ##
+    ## RSS
       * feedparser.py
       * project_util.py
       * ps7.py
       * ps7_test.py
       * triggers.txt
 
-    ## Search engine ##
+    ## Search engine
       * crawler.py
       * getpage.py
       * search.py
       * test.py
       * webcorpus.py
 
-    ## Simulating robots ##
+    ## Simulating robots
       * robotSimulation.py
       * visualize.py
 
-    ## Strings ##
+    ## Strings
       * alphabetical_substrings.py
       * counting_bobs.py
       * counting_vowels.py
