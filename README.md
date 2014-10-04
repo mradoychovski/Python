@@ -1,13 +1,13 @@
     # Python repository contains:
 
     ## Algorithms
+      ### BFS
+
+      ### Clustering
+
       ### MergeSort
-        * IntegerArray.txt
-        * mergeSort.py
 
       ### QuickSort
-        * quickSort.py
-        * QuickSort.txt
 
     ## CEASAR's Code
       * fable.txt
@@ -19,18 +19,20 @@
       
     ## Games
       ### 2048
-        * poc_2048_gui.py
-        * TwFN.py
+
+      ### Coocke Clicker
 
       ### Hangman
-        * ps3_hangman.py
-        * words.txt
       
       ### SCRABBLE
-        * ps4a.py
-        * ps4b.py
-        * test_ps4a.py
-        * words.txt
+
+      ### TTT (Tic-Tac-Toe)
+
+      ### Wrangler
+
+      ### Yahtzee
+
+      ### Zombie
       
       * Asteroids.py
       * BlackJack.py
@@ -41,35 +43,16 @@
       * StopWatch.py
 
     ## Graph optimization
-      * graph.py 
  
     ## PAYING OFF CREDIT CARD DEBT
-      * bisection_search.py
-      * paying_debt_off_in_a_year.py
-      * paying_the_minimum.py
 
     ## RSS
-      * feedparser.py
-      * project_util.py
-      * ps7.py
-      * ps7_test.py
-      * triggers.txt
 
     ## Search engine
-      * crawler.py
-      * getpage.py
-      * search.py
-      * test.py
-      * webcorpus.py
 
     ## Simulating robots
-      * robotSimulation.py
-      * visualize.py
 
     ## Strings
-      * alphabetical_substrings.py
-      * counting_bobs.py
-      * counting_vowels.py
   
     * FamilyTree.py
     * findSecret.py
