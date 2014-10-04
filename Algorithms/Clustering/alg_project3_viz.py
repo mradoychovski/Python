@@ -14,6 +14,9 @@ import math
 import random
 import urllib2
 import alg_cluster
+import matplotlib.pyplot as plt
+from textwrap import wrap
+from time import time
 
 # conditional imports
 if DESKTOP:
@@ -118,33 +121,85 @@ def run_example():
         alg_clusters_simplegui.PlotClusters(data_table, cluster_list)
 
 
-def quality_h(DATA):
-    data_table = load_data_table(DATA)
+#def compute_runtime(function, DATA, interval):
+#    start = time()
+#    function(DATA, interval)
+#    t = time()-start
+#    return t
+
+
+def quality_h(data_table, interval):
+    """
+    Input:
+        Loaded data table
+        List with the number of output clusters
+    Return:
+        List of distortion of the clusterings,
+        produced by hierarchical clustering method
+    """
+    def distortion_h(data_table, num_clstrs):
+        singleton_list = \
+            [alg_cluster.Cluster(set([line[0]]), line[1], line[2], line[3], line[4])
+                for line in data_table]
+        cluster_list = \
+            alg_project3_solution.hierarchical_clustering(singleton_list, num_clstrs)
+        distortion = \
+            sum([clstr.cluster_error(data_table) for clstr in cluster_list])
+
+        return distortion
+
+    hierarchical = [distortion_h(data_table, num_clstrs) for num_clstrs in interval]
+    return hierarchical
+
+
+def quality_k(data_table, interval):
+    """
+    Input:
+        Loaded data table
+        List with the number of output clusters
+    Return:
+        List of distortion of the clusterings,
+        produced by k-means clustering method
+    """
     singleton_list = \
         [alg_cluster.Cluster(set([line[0]]), line[1], line[2], line[3], line[4])
             for line in data_table]
-    hierarchical = [hierarchical_clustering(singleton_list, clstrs)[1]]
-        for clstrs in range(6, 21)
-    return hiearchical
+    distortion = []
+    for num_clstrs in interval:
+        cluster_list = \
+            alg_project3_solution.kmeans_clustering(singleton_list, num_clstrs, 5)
+        distortion.append(sum([clstr.cluster_error(data_table) for clstr in cluster_list]))
+    return distortion
 
 
-def quality_k(DATA)
+def distortion_plot(DATA, interval):
+    """
+    Load data table, compute and create plot that compare
+    the distortion of the clusterings produced by
+    hierarchical and k-means clustering methods
+    
+    Intput:
+        DATA URL
+        List with the number of output clusters
+    """
     data_table = load_data_table(DATA)
-    singleton_list = \
-        [alg_cluster.Cluster(set([line[0]]), line[1], line[2], line[3], line[4])
-            for line in data_table]
-    k_means = [kmeans_clustering(singleton_list, clstrs, 5)[1]
-        for clstrs in range(6, 21)
-    return k_means
+    y_h = quality_h(data_table, interval)
+    y_k = quality_k(data_table, interval)
+
+    plt.plot(interval, y_h, '-r', label='hierarchical')
+    plt.plot(interval, y_k, '-g', label='k-means')
+    plt.title("\n".join(wrap(
+        "Compute distortion of functions hierarchical and k-means clustering for {} county data sets".format(
+        len(data_table)), 60)))
+    plt.xlabel('Number of output clusters')
+    plt.ylabel('Distortion')
+    plt.legend(loc='upper right')
+    plt.show()
 
 
-#run_example()
-
-h_vals = range(6, 21)
-h_111 = quality_h(DATA_111_URL)
-h_290 = quality_h(DATA_290_URL)
-h_896 = quality_h(DATA_896_URL)
-k_111 = quality_k(DATA_111_URL)
-k_290 = quality_k(DATA_290_URL)
-k_896 = quality_k(DATA_896_URL)
-
+if __name__ == "__main__":
+    #run_example()
+    interval = range(6, 21)
+#    distortion_plot(DATA_111_URL, interval)
+#    distortion_plot(DATA_290_URL, interval)
+    distortion_plot(DATA_896_URL, interval)

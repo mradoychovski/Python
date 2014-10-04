@@ -148,8 +148,8 @@ def hierarchical_clustering(cluster_list, num_clusters):
             cluster_list[clstr_i].merge_clusters(cluster_list[clstr_j]))
         cluster_list.remove(cluster_list[clstr_j])
         cluster_list.remove(cluster_list[clstr_i])
-    distortion = sum([clstr.cluster_error(data_table) for clstr in cluster_list])
-    return cluster_list, distortion
+    #distortion = sum([clstr.cluster_error(data_table) for clstr in cluster_list])
+    return cluster_list     #, distortion
 
 
 def kmeans_clustering(cluster_list, num_clusters, num_iterations):
@@ -181,7 +181,7 @@ def kmeans_clustering(cluster_list, num_clusters, num_iterations):
         for item in range(num_clusters):
             init_points[item] = (empty_clstrs[item].horiz_center(),
                 empty_clstrs[item].vert_center())
-    distortion = sum([clstr.cluster_error(data_table) for clstr in cluster_list])
-    return empty_clstrs, distortion
+    
+    return empty_clstrs
 
 
