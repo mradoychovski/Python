@@ -7,6 +7,7 @@ DESKTOP = True
 import math
 import random
 import urllib2
+from textwrap import wrap
 
 if DESKTOP:
     import matplotlib.pyplot as plt
@@ -138,7 +139,7 @@ def App4_Q2(scoring_matrix):
     return human_cons_per, fruitfly_cons_per
 
 
-# App4_Q4
+# App4_Q4 - Part 1
 def generate_null_distribution(seq_x,seq_y, scoring_matrix, num_trials):
     """
     Takes as input two sequences seq_x and seq_y, a scoring matrix
@@ -151,15 +152,57 @@ def generate_null_distribution(seq_x,seq_y, scoring_matrix, num_trials):
     rand_y using the score matrix scoring_matrix.
       - Increment the entry score in the dictionary scoring_distribution by one.
     """
-    pass
+    scoring_distribution = {}
+    score = 1
+    for trial in range(num_trials):
+        rnd_y_list = [ch for ch in seq_y]
+        random.shuffle(rnd_y_list)
+        rand_y = ''.join(rnd_y_list)
+        scoring_distribution[score] = \
+            student.local_alignment(seq_x, rand_y, scoring_matrix)[0]
+        score += 1
+
+    return scoring_distribution
+    
+
+# App4_Q4 - Part 2
+def App4_Q4_plot(scoring_matrix, num_trials=1000):
+    """
+    Create local alignment normalized distribution of Human Eyeless Protein and
+    Fruitfly Eyeless Protein sequenceces and plot it.
+    """
+    human = read_protein(HUMAN_EYELESS_URL)
+    fruitfly = read_protein(FRUITFLY_EYELESS_URL)
+    null_dist = \
+        generate_null_distribution(human, fruitfly, scoring_matrix, num_trials)
+    norm_dist = {key: 1.*value/num_trials for key, value in null_dist.items()}
+    x_vals = list(norm_dist.keys())
+    y_vals = list(norm_dist.values())
+
+    plt.plot(x_vals, y_vals, '-b')
+    plt.xlabel('scores')
+    plt.ylabel('normalized distribution')
+    plt.title("\n".join(wrap(
+        'Local alignment of Human Eyeless Protein and Fruitfly Eyeless Protein \
+sequences - normal distribution', 60)))
+    plt.show()
+
+    return null_dist
 
 
-def App_Q5():
-    pass
-
-
-def App4_Q6():
-    pass
+def App4_Q5(seq_x, seq_y, scoring_matrix, num_trials=1000):
+    """
+    Compute mean, standard deviation and z-score from local alignment of 
+    two sequences seq_x and seq_y
+    """
+    null_dist = App4_Q4_plot(scoring_matrix, num_trials)
+    scores = list(null_dist.values())
+    mean = 1.*sum(scores)/num_trials
+    standard_dev = math.sqrt(1.*sum(
+        [(score-mean)**2 for score in scores])/num_trials)
+    local_score = student.local_alignment(seq_x, seq_y, scoring_matrix)[0]
+    z_score = 1.*(local_score-mean)/standard_dev
+    return mean, standard_dev, z_score
 
 
 def App4_Q7():
@@ -172,5 +215,10 @@ def App4_Q8():
 
 if __name__ == "__main__":
     scoring_matrix = read_scoring_matrix(PAM50_URL)
+    human = read_protein(HUMAN_EYELESS_URL)
+    fruitfly = read_protein(FRUITFLY_EYELESS_URL)
+    #consensus = read_protein(CONSENSUS_PAX_URL)
     #print App4_Q1(scoring_matrix)
-    print App4_Q2(scoring_matrix)
+    #print App4_Q2(scoring_matrix)
+    #App4_Q4_plot(scoring_matrix)
+    print App4_Q5(human, fruitfly, scoring_matrix)
