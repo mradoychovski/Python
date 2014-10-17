@@ -8,6 +8,7 @@ import math
 import random
 import urllib2
 from textwrap import wrap
+import string
 
 if DESKTOP:
     import matplotlib.pyplot as plt
@@ -205,20 +206,31 @@ def App4_Q5(seq_x, seq_y, scoring_matrix, num_trials=1000):
     return mean, standard_dev, z_score
 
 
-def App4_Q7():
-    pass
-
-
-def App4_Q8():
-    pass
+# App4_Q8
+def check_spelling(checked_word, dist, word_list):
+    """
+    Iterates through word_list and returns the set of all words that are within
+    edit distance dist of the string checked_word.
+    """
+    alphabet = string.ascii_lowercase + '-'
+    sample_matrix = student.build_scoring_matrix(alphabet, 2, 1, 0)
+    words = set([])
+    for word in set(word_list):
+        if len(word) + len(checked_word) - student.global_alignment(
+            word, checked_word, sample_matrix)[0] <= dist:
+            words.add(word)
+    return words
 
 
 if __name__ == "__main__":
-    scoring_matrix = read_scoring_matrix(PAM50_URL)
-    human = read_protein(HUMAN_EYELESS_URL)
-    fruitfly = read_protein(FRUITFLY_EYELESS_URL)
+    #scoring_matrix = read_scoring_matrix(PAM50_URL)
+    #human = read_protein(HUMAN_EYELESS_URL)
+    #fruitfly = read_protein(FRUITFLY_EYELESS_URL)
     #consensus = read_protein(CONSENSUS_PAX_URL)
+    word_list = read_words(WORD_LIST_URL)
     #print App4_Q1(scoring_matrix)
     #print App4_Q2(scoring_matrix)
     #App4_Q4_plot(scoring_matrix)
-    print App4_Q5(human, fruitfly, scoring_matrix)
+    #print App4_Q5(human, fruitfly, scoring_matrix)
+    print check_spelling('humble', 1, word_list)
+    print check_spelling('firefly', 2, word_list)
