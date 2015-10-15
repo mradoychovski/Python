@@ -1,11 +1,34 @@
+"""
+    Calculate temperature, pressure, and density in accordance with ISA
+    for given altitude using Hidrostatic equation
+    International Standart Atmosphere (ISA):
+        altitude = 0 (sea level)
+        temperature = 288.15 K (15 C)
+        pressure = 101325 Pa
+        density = 1.225 kg/m^3
+        R = 287.0 J/(kg*K)
+"""
+
 from math import e
 
 
-def height(h1, h2):
-    return h2 - h1
+def delta_altitude(h1, h2):
+    """
+    Calculate altitude difference in m
+    """
+    return abs(h2 - h1)
 
 
 def temp_press_dens(a, h0, T0=288.15, P0=101325, rho0=1.225, g=9.80665, R=287.):
+    """
+    a -> Lapse rate (temperature change) in Kelvin per meter
+    R -> real gas constant for air in J/(kg*K)
+    g -> acceleration due to gravity in m/s^2
+    h0 -> altitude difference in m
+    T0 -> temperature in Kelvin
+    P0 -> pressure in Pa
+    rho0 -> density in kg/m^3
+    """
     if a == 0:
         P1 = P0 * e ** (-g / (R * T0) * h0)
         rho1 = rho0 * e ** (-g / (R * T0) * h0)
@@ -18,12 +41,13 @@ def temp_press_dens(a, h0, T0=288.15, P0=101325, rho0=1.225, g=9.80665, R=287.):
 
 
 if __name__ == "__main__":
-    h = input("Enter height h in m: ")
+    altitude = input("Enter altitude in m, please: ")
 
-    assert h >= 0, "h is less then zero"
-    assert h <= 84852, "h is greater then 84852m "
+    assert altitude >= 0, "altitude is less then zero"
+    assert altitude <= 84852, "altitude is greater then 84852m "
 
-    a_h = [[-0.0065, 11000], [0, 20000], [0.001, 32000],
+    # [Lapse rate in K/m, altitude in m]
+    a_alt = [[-0.0065, 11000], [0, 20000], [0.001, 32000],
         [0.0028, 47000], [0, 51000], [-0.0028, 71000], [-0.002, 84852]]
 
     h0 = 0
@@ -31,17 +55,17 @@ if __name__ == "__main__":
     p0 = 101325
     rho0 = 1.225
 
-    for i in a_h:
-        if h <= i[1]:
-            hght = height(h0, h)
+    for i in a_alt:
+        if altitude <= i[1]:
+            alt = delta_altitude(h0, altitude)
             t0, p0, rho0 = \
-                temp_press_dens(i[0], hght, t0, p0, rho0)
+                temp_press_dens(i[0], alt, t0, p0, rho0)
             break
         else:
             h1 = i[1]
-            hght = height(h0, h1)
+            alt = delta_altitude(h0, h1)
             t0, p0, rho0 = \
-                temp_press_dens(i[0], hght, t0, p0, rho0)
+                temp_press_dens(i[0], alt, t0, p0, rho0)
             h0 = i[1]
 
     print ((t0, p0, rho0))
